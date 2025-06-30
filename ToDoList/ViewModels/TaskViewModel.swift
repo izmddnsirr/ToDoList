@@ -1,11 +1,3 @@
-//
-//  TaskViewModel.swift
-//  ToDoList
-//
-//  Created by Izamuddin Nasir on 30/06/2025.
-//
-
-
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
@@ -40,16 +32,17 @@ class TaskViewModel: ObservableObject {
         }
     }
 
-    func deleteTask(at offsets: IndexSet) {
-        offsets.forEach { index in
-            if let id = tasks[index].id {
-                db.collection("tasks").document(id).delete()
-            }
-        }
-    }
-
     func toggleTask(_ task: Task) {
         guard let id = task.id else { return }
         db.collection("tasks").document(id).updateData(["isDone": !task.isDone])
+    }
+
+    func deleteTask(at offsets: IndexSet) {
+        for index in offsets {
+            let task = tasks[index]
+            guard let taskId = task.id else { continue }
+            db.collection("tasks").document(taskId).delete()
+        }
+        tasks.remove(atOffsets: offsets)
     }
 }

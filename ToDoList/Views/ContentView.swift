@@ -9,13 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var authVM: AuthViewModel
+    @AppStorage("isDarkMode") private var isDarkMode = false
 
     var body: some View {
-        if authVM.user != nil {
-            TaskListView()
-        } else {
-            LoginView()
+        Group {
+            if authVM.user != nil {
+                MainTabView()
+            } else {
+                LoginView()
+            }
         }
+        .environment(\.font, .system(.body, design: .monospaced)) // ✅ apply font globally
+        .preferredColorScheme(isDarkMode ? .dark : .light) // optional
     }
 }
+
+
+
 
