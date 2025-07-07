@@ -19,8 +19,8 @@ struct ContentView: View {
                 LoginView()
             }
         }
-        .environment(\.font, .system(.body, design: .monospaced)) // ✅ apply font globally
-        .preferredColorScheme(isDarkMode ? .dark : .light) // optional
+        .environment(\.font, .system(.body, design: .monospaced))
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 
